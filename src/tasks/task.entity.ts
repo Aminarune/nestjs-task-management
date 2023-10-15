@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 import { IsEnum, IsNotEmpty } from 'class-validator';
+import { User } from 'src/auth/user.entity';
 
 @Entity()
 export class Task {
@@ -18,4 +19,8 @@ export class Task {
   @Column()
   @IsEnum(TaskStatus)
   status: TaskStatus;
+
+  // eslint-disable-next-line
+  @ManyToOne(type => User, user => user.tasks, { eager: false })
+  user: User;
 }
